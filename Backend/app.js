@@ -19,8 +19,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+var indexRouter = require('./routes/index');
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// incluir las rutas especificas para la entidad
+var apiRouter = require('./routes/api/index')(db);
+app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

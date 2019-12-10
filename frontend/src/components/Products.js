@@ -8,10 +8,10 @@ export default class Products extends Component {
                 <div className="thumbnail text-center">
                     <a href={`#${product.id}`}onClick={(e)=>this.props.handleAddToCart(e, product)}>
                         <img src={`/products/${product.sku}.jpg`} alt={product.title} />
-                        <p>{product.title}</p>                        
+                        <hr />                     
                     </a>
                     <b>{util.formatCurrency(product.price)}</b>
-                    <button className="btn btn-primary" onClick={(e)=>this.props.handleAddToCart(e, product)}>Add to cart</button>
+                    <button className="btn btn-danger" onClick={(e)=>this.props.handleAddToCart(e, product)}>Reservar</button>
                 </div>
             </div>
         ));
