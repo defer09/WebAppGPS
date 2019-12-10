@@ -9,6 +9,7 @@ export default class Products extends Component {
                 <div className="col-md-4">
                     {`${this.props.count} Peliculas Disponibles.`}
                 </div>
+                <hr/>
                 <div className="col-md-4">
                     <label>Ordenar por 
                <select className="form-control" value={this.props.sort} onChange={this.props.handleSortChange}>
@@ -18,6 +19,7 @@ export default class Products extends Component {
                         </select>
                     </label>
                 </div>
+                <br/>
                 <div className="col-md-4">
                     <label > Salas
                <select className="form-control" value={this.props.size} onChange={this.props.handleSizeChange}>

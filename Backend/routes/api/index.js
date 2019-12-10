@@ -15,7 +15,6 @@ passport.use(
       secretOrKey: 'cuandolosgatosnoestanlosratonesfiestahacen'
     },
     (payload, next)=>{
-      console.log(payload);
       var user = payload;
       return next(null, user);
     }
@@ -24,18 +23,19 @@ passport.use(
 
 
 //Rutas de Cada Entidad
-var securityApiRoutes = require('./security/index')(db);
 var reserApiRoutes = require('./reservaciones/index')(db);
+var securityApiRoutes = require('./security/index')(db);
+
 
 //localhost:3000/api/sec/
-router.use('/sec', securityApiRoutes);
 
-
-//localhost:3000/api/prd/
 router.use('/rsv',
     passport.authenticate('jwt', {session:false}),
-    productsApiRoutes
+    reserApiRoutes
 );
+
+router.use('/sec', securityApiRoutes);
+
 
 
 return router;

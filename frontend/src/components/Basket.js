@@ -7,8 +7,8 @@ export default class Basket extends Component {
         return (
             <div className="alert alert-info">
                 {cartItems.length === 0
-                    ? "Basket is empty" :
-                    <div>You have {cartItems.length} items in the basket. <hr /></div>
+                    ? "Reservaciones Vacias" :
+                    <div>Tienes {cartItems.length}  pelicula(s) reservada. <hr /></div>
                 }
                 {cartItems.length > 0 &&
                     <div>
@@ -24,7 +24,7 @@ export default class Basket extends Component {
                             }
                         </ul>
 
-                        <b>Sum: {util.formatCurrency(cartItems.reduce((a, c) => (a + c.price * c.count), 0))}
+                        <b>Total: {util.formatCurrency(cartItems.reduce((a, c) => (a + c.price * c.count), 0))}
                         </b>
                         <button onClick={() => alert('Todo: Implement checkout page.')} className="btn btn-primary">PAGAR</button>
                     </div>

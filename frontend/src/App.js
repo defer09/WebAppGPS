@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import Products from './components/Products';
 import Filter from './components/Filter';
 import Basket from './components/Basket';
+import mainReducer from './store/store';
+import { configAuthAxios } from './components/utilities/MyAxios';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import PrivateRoute from './components/utilities/PrivateRoute';
+import { StateProvider } from './components/utilities/context';
+import Login from './components/pages/login/login';
+import Signin from './components/pages/singin/Signin';
+import Reser from './components/pages/private/reservaciones/reser';
+import ReserForm from './components/pages/private/reserform/reserform';
 
 import './App.css';
 
@@ -9,8 +18,17 @@ import './App.css';
 class App extends Component {
   constructor() {
     super();
-    this.state = { size: '', sort: '', cartItems: [], products: [], filteredProducts: [] };
+    this.state=mainReducer();
+    if(this.state.auth.jwt!=''){
+      configAuthAxios(this.state.auth);
+      this.state = { size: '', sort: '', cartItems: [], products: [], filteredProducts: [] };
+    }
+    
   }
+
+
+
+
   componentWillMount() {
 
     if (localStorage.getItem('cartItems')) {
@@ -27,7 +45,7 @@ class App extends Component {
 
   handleRemoveFromCart = (e, product) => {
     this.setState(state => {
-      const cartItems = state.cartItems.filter(a => a.id !== product.id);
+      const cartItems = state.cartItems.filter(a => a.id != product.id);
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
       return { cartItems: cartItems };
     })
@@ -63,7 +81,7 @@ class App extends Component {
       } else {
         state.products.sort((a, b) => (a.id > b.id) ? 1 : -1);
       }
-      if (state.size !== '') {
+      if (state.size != '') {
         return { filteredProducts: state.products.filter(a => a.availableSizes.indexOf(state.size.toUpperCase()) >= 0) };
       }
       return { filteredProducts: state.products };
@@ -80,23 +98,33 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        <h1> CINES HACIENDA REAL</h1>
-        <hr />
-        <div className="row">
-          <div className="col-md-9">
-            <Filter count={this.state.filteredProducts.length} handleSortChange={this.handleSortChange}
-              handleSizeChange={this.handleSizeChange} />
-            <hr />
-            <Products products={this.state.filteredProducts} handleAddToCart={this.handleAddToCart} />
-          </div>
-          <div className="col-md-3">
-            <Basket cartItems={this.state.cartItems} handleRemoveFromCart={this.handleRemoveFromCart} />
-          </div>
+      <StateProvider initialState={this.state} reducer={mainReducer}>
+        <Router>
+          <Switch>
+              <Route path="/login" component={Login}/>
+              <Route path="/signin" component={Signin} />
+              <PrivateRoute path="/reser" component={Reser}/>
+              <PrivateRoute path="/reserform" component={ReserForm} />
+              <div className="container">
+              <h1 textJustify >CINES HACIENDA REAL</h1>
+              <hr />
+              <div className="row">
+                <div className="col-md-9">
+                  <Filter count={this.state.filteredProducts.length} handleSortChange={this.handleSortChange}
+                    handleSizeChange={this.handleSizeChange} />
+                  <hr />
+                  <Products products={this.state.filteredProducts} handleAddToCart={this.handleAddToCart} />
+                </div>
+                <div className="col-md-3">
+                  <Basket cartItems={this.state.cartItems} handleRemoveFromCart={this.handleRemoveFromCart} />
+                </div>
 
-        </div>
+               </div>
 
-      </div>
+               </div>
+            </Switch>
+        </Router>
+      </StateProvider>
     );
   }
 }

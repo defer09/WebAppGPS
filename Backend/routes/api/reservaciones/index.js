@@ -6,7 +6,7 @@ function initResApi(db){
 var rsvModel = require('./reservaciones.model')(db);
 
 router.get('/all', function(req, res){
-  rsvModel.getAllReservaciones((err, reser)=>{
+  rsvModel.getAllReser((err, reser)=>{
     if(err){
       res.status(404).json([]);
     } else {
@@ -16,7 +16,7 @@ router.get('/all', function(req, res){
 }); // get /all
 
 router.post('/new', function(req, res){
-   if (req.user.roles.findIndex((o)=>{return o=="public"}) == -1) {
+   if (req.user.roles.findIndex((o)=>{return o=="administrator"}) == -1) {
      return res.status(401).json({"error":"Sin privilegio"});
    }
    var newRsv = Object.assign(
@@ -27,7 +27,7 @@ router.post('/new', function(req, res){
         "price":parseInt(req.body.price),
         "createdBy": req.user }
     );
-   prdModel.saveNewProduct(newRsv, (err, rslt)=>{
+   rsvModel.saveNewReser(newRsv, (err, rslt)=>{
      if(err){
        res.status(500).json(err);
      }else{
@@ -35,6 +35,21 @@ router.post('/new', function(req, res){
      }
    });// saveNewProduct
 }); // post /new
+
+router.put('/update/:rsvid',
+  function(req, res){
+    var rsvIdToModify = req.params.rsvid;
+    rsvModel.updateReser(rsvIdToModify,
+      (err, rsult)=>{
+        if(err){
+          res.status(500).json({"error":"Lo sentimos mucho, ha ocurrido un error."});
+        }else{
+          res.status(200).json(rsult);
+        }
+      }
+      ); //updateProduct
+  }
+);// put :prdsku
 
 
 router.delete(
@@ -44,7 +59,7 @@ router.delete(
     if(id===''){
       return res.status(404).json({"error":"Identificador no válido"});
     }
-    rsvModel.deleteProduct(id , (err, rslt)=>{
+    rsvModel.deleteReser(id , (err, rslt)=>{
       if(err){
         return res.status(500).json({"error":"Ocurrio un error intente de nuevo."});
       }
@@ -54,6 +69,6 @@ router.delete(
 );// delete
 
   return router;
-} //end initProductsApi
+} //end 
 
 module.exports = initResApi;

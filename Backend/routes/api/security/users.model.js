@@ -31,7 +31,7 @@ function initUserModel(db){
       dateCreated: new Date().getTime(),
       active:true,
       lastPasswords : [],
-      roles:["public"]
+      roles:["administrator"]
     });
     userCollection.insertOne(newUser, (err, rslt)=>{
       if(err){

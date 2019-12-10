@@ -2,27 +2,31 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var lessMiddleware = require('less-middleware');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+
+function initApp(db){
+
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 var indexRouter = require('./routes/index');
 app.use('/', indexRouter);
 // incluir las rutas especificas para la entidad
 var apiRouter = require('./routes/api/index')(db);
+
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
@@ -41,4 +45,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+ return app;
+}// end initApp
+
+module.exports = initApp;
