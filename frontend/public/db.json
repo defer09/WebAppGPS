@@ -1,0 +1,59 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "sku": 123,
+      "title": "Crepusculo",
+      "availableSizes": ["1","2"],
+      "price": 80,
+      "isFreeShipping": true
+    },
+
+    {
+      "id": 2,
+      "sku": 1234,
+      "title": "Inseparables",
+      "availableSizes": ["3","4"],
+      "price": 80,
+      "isFreeShipping": true
+    },
+
+    {
+      "id": 3,
+      "sku": 12345,
+      "title": "El Hijo",
+      "availableSizes": ["5","6"],
+      "price": 80,
+      "isFreeShipping": true
+    },
+
+    {
+      "id": 4,
+      "sku": 123456,
+      "title": "Arrival",
+      "availableSizes": ["7","8"],
+      "price": 80,
+      "isFreeShipping": false
+    },
+
+    {
+      "id": 5,
+      "sku": 1234567,
+      "title": "Lobos",
+      "description": "Tso 3D Short Sleeve",
+      "availableSizes": ["9"],
+      "price": 150,
+      "isFreeShipping": false
+    },
+
+    {
+      "id": 6,
+      "sku": 12345678,
+      "title": "The Upside",
+      "description": "Man Tie Dye Cinza Grey",
+      "availableSizes": ["10"],
+      "price": 150,
+      "isFreeShipping": false
+    }
+  ]
+}
