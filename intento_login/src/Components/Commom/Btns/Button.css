@@ -1,0 +1,45 @@
+.btn{
+  background: black;
+  color:#fff;
+  padding: 1e, 2.5em;
+  border: 1px solid #DDD;
+  border-radius: 0.75em;
+  margin: 5px ;
+  font-size: 15px;
+
+}
+.bt{
+  background: black;
+  color:#fff;
+  padding: 1e, 2.5em;
+  border: 1px solid #DDD;
+  border-radius: 0.75em;
+  margin: 5px ;
+  font-size: 15px;
+}
+
+.tit1{
+  padding: 1e, 2.5em;
+  margin: 5px ;
+  font-size: 15px;
+  text-align: center;
+
+}
+
+.part{
+  padding: 1e, 2.5em;
+  margin: 5px ;
+  font-size: 20px;
+  text-align: center;
+}
+
+.primary {
+  background-color: #3e549c;
+  color: #fff;
+}
+.link {
+  background-color: inherit;
+  color: #3e549c;
+  border: none;
+  text-decoration: underline;
+}
